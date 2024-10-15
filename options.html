@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html class="font-body text-sm" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Webhead</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || ''</script>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    fontFamily: {
+                        body: ['unibody_8_pro_regregular', 'sans-serif'],
+                        head: ['unibody_8_pro_regregular', 'sans-serif'],
+                        caps: ['unibody_8_proRgsmallcaps', 'sans-serif'],
+                    },
+                    extend: {
+                        colors: {
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            transparent: 'transparent',
+                            current: 'currentColor',
+                            inherit: 'inherit',
+                        },
+                    }
+                },
+            }
+        </script>
+    </head>
+
+    <body x-data="fader" class="grid grid-cols-5 grid-rows-10 bg-[--color-bg] text-[--color-text] antaliased h-screen transition-colors duration-300">
+
+        <span x-ref="fader" class="fixed z-[99999] top-0 left-0 w-full h-full bg-[--color-bg] pointer-events-none"></span>
+
+        <header class="col-start-1 col-span-1 row-start-2 row-span-1 justify-self-center [.home_&]:invisible">
+          <a href="index.html" @click="handleClick">[ X ]</a>
+        </header>
+
+        <main class="col-start-2 col-span-3 row-start-2 row-span-8">
+          <ul class="space-y-8">
+            <li class="space-y-4" x-data="themeHandler">
+              <p>Site Theme: <span x-ref="name" class="capitalize"></span></p>
+
+              <ul class="flex gap-4" x-data="{ themes: ['code','melon','vapor','game','paint','moon','acid','1-bit'] }">
+                  <template x-for="(theme, index) in themes" :key="index">
+                      <li :data-theme="theme">
+                        <input type="radio" name="theme" :value="theme" :id="theme" class="peer sr-only" x-model="currentTheme" @change="changeTheme(theme)" />
+                        <label :for="theme" class="peer-checked:outline peer-checked:outline-[--color-highlight] cursor-pointer block w-4 h-8 bg-gradient-to-b from-[--color-bg] from-50% via-[--color-text] via-50% to-[--color-text]"><span class="sr-only" x-text="theme"></span></label>
+                      </li>
+                  </template>
+              </ul>
+            </li>
+
+            <li>
+              <p>Sound Effects:</p>
+            </li>
+          </ul>
+        </main>
+
+        <script type="text/javascript">
+          document.addEventListener('alpine:init', () => {
+              Alpine.data('themeHandler', () => ({
+                  currentTheme: document.documentElement.dataset.theme || 'code',
+                  
+                  init() {
+                      // Set initial text
+                      gsap.set(this.$refs.name, { text: this.currentTheme });
+
+                      this.$watch('currentTheme', value => {
+                          this.changeTheme(value);
+                      });
+                  },
+                  
+                  changeTheme(theme) {
+                      document.documentElement.dataset.theme = theme;
+                      localStorage.setItem('theme', theme);
+                      
+                      gsap.to(this.$refs.name, {
+                          text: theme,
+                          duration: 0.3,
+                          ease: "none",
+                      });
+                  }
+              }));
+          });
+        </script>
+
+        <script src="js/global.js"></script>
+    </body>
+</html>

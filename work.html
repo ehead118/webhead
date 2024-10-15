@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="font-body text-sm" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhead</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || ''</script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    body: ['unibody_8_pro_regregular', 'sans-serif'],
+                    head: ['unibody_8_pro_regregular', 'sans-serif'],
+                    caps: ['unibody_8_proRgsmallcaps', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        white: '#FFFFFF',
+                        transparent: 'transparent',
+                        current: 'currentColor',
+                        inherit: 'inherit',
+                    },
+                }
+            },
+        }
+    </script>
+</head>
+
+<body x-data="{ ...projectManager(), ...fader() }" class="grid grid-cols-5 grid-rows-10 bg-[--color-bg] text-[--color-text] antaliased h-screen transition-colors duration-300">
+
+    <svg aria-hidden="true" class="absolute w-0 h-0 overflow-hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <symbol id="icon-branding-and-identity" viewBox="0 0 24 24">
+          <title>Branding and Identity</title>
+          <path d="M20.2153 8.16907H21.3078V18.0231H20.2153V8.16907Z"/>
+          <path d="M20.2153 5.97687H21.3078V7.06937H20.2153V5.97687Z"/>
+          <path d="M19.1228 18.0231H20.2153V20.2153H19.1228V18.0231Z"/>
+          <path d="M19.1228 3.78467H20.2153V5.97686H19.1228V3.78467Z"/>
+          <path d="M18.0231 13.6459H19.1228V16.9306H18.0231V13.6459Z"/>
+          <path d="M18.0231 7.0694H19.1228V10.3541H18.0231V7.0694Z"/>
+          <path d="M16.9306 16.9306H18.0231V19.1228H16.9306V16.9306Z"/>
+          <path d="M16.9306 4.8844H18.0231V7.0694H16.9306V4.8844Z"/>
+          <path d="M15.831 21.3078H16.9307V22.4075H15.831V21.3078Z"/>
+          <path d="M15.831 8.16907H16.9307V15.8309H15.831V8.16907Z"/>
+          <path d="M14.7385 3.78467H16.9307V4.88436H14.7385V3.78467Z"/>
+          <path d="M15.831 1.59253H16.9307V2.69222H15.831V1.59253Z"/>
+          <path d="M14.7385 19.1228H16.9307V20.2153H14.7385V19.1228Z"/>
+          <path d="M14.7385 7.0694H15.831V8.16908H14.7385V7.0694Z"/>
+          <path d="M13.6459 22.4075H15.8309V23.5H13.6459V22.4075Z"/>
+          <path d="M13.6459 16.9306H14.7384V18.0231H13.6459V16.9306Z"/>
+          <path d="M13.6459 12.5463H14.7384V14.7385H13.6459V12.5463Z"/>
+          <path d="M13.6459 9.26157H14.7384V11.4538H13.6459V9.26157Z"/>
+          <path d="M12.5463 2.6922H14.7385V3.7847H12.5463V2.6922Z"/>
+          <path d="M9.26157 20.2153H14.7384V21.3078H9.26157V20.2153Z"/>
+          <path d="M11.4538 8.16907H13.646V9.26157H11.4538V8.16907Z"/>
+          <path d="M10.3541 14.7384H13.6459V15.8309H10.3541V14.7384Z"/>
+          <path d="M11.4538 10.3541H12.5463V13.6459H11.4538V10.3541Z"/>
+          <path d="M10.3541 4.8844H13.6459V5.9769H10.3541V4.8844Z"/>
+          <path d="M10.3541 18.0231H13.6459V19.1228H10.3541V18.0231Z"/>
+          <path d="M9.26157 2.6922H11.4538V3.7847H9.26157V2.6922Z"/>
+          <path d="M8.16907 22.4075H11.4538V23.5H8.16907V22.4075Z"/>
+          <path d="M9.26157 16.9306H10.3541V18.0231H9.26157V16.9306Z"/>
+          <path d="M9.26157 10.3541H10.3541V14.7384H9.26157V10.3541Z"/>
+          <path d="M8.16907 0.5H15.8309V1.5925H8.16907V0.5Z"/>
+          <path d="M8.16907 7.0694H9.26157V8.16908H8.16907V7.0694Z"/>
+          <path d="M7.0694 3.78467H9.26158V4.88436H7.0694V3.78467Z"/>
+          <path d="M5.9769 21.3078H8.16909V22.4075H5.9769V21.3078Z"/>
+          <path d="M7.0694 14.7384H8.16908V15.8309H7.0694V14.7384Z"/>
+          <path d="M7.0694 11.4537H8.16908V13.6459H7.0694V11.4537Z"/>
+          <path d="M7.0694 8.16907H8.16908V10.3541H7.0694V8.16907Z"/>
+          <path d="M5.9769 16.9306H7.0694V19.1228H5.9769V16.9306Z"/>
+          <path d="M5.9769 4.8844H7.0694V7.0694H5.9769V4.8844Z"/>
+          <path d="M4.8844 20.2153H5.9769V21.3078H4.8844V20.2153Z"/>
+          <path d="M4.8844 8.16907H5.9769V16.9306H4.8844V8.16907Z"/>
+          <path d="M4.8844 2.6922H5.9769V3.7847H4.8844V2.6922Z"/>
+          <path d="M3.7847 18.0231H4.88439V20.2153H3.7847V18.0231Z"/>
+          <path d="M3.7847 3.78467H4.88439V5.97686H3.7847V3.78467Z"/>
+          <path d="M2.6922 14.7384H3.7847V18.0231H2.6922V14.7384Z"/>
+          <path d="M2.6922 5.97687H3.7847V13.6459H2.6922V5.97687Z"/>
+        </symbol>
+
+        <symbol id="icon-web-based-animation" viewBox="0 0 24 24">
+          <title>Web-Based Animation</title>
+          <path d="M21.8541 6.52313H22.9538V7.61563H21.8541V6.52313Z"/>
+          <path d="M20.7616 7.61563H21.8541V8.71532H20.7616V7.61563Z"/>
+          <path d="M20.7616 5.43063H21.8541V6.52313H20.7616V5.43063Z"/>
+          <path d="M19.6691 6.52313H20.7616V7.61563H19.6691V6.52313Z"/>
+          <path d="M19.6691 20.7616V19.6619H20.7616V18.5694H19.6691V17.4769H18.5694V18.5694H17.4769V19.6619H18.5694V20.7616H19.6691Z"/>
+          <path d="M18.5694 9.80783H19.6691V12H18.5694V9.80783Z"/>
+          <path d="M17.4769 12H18.5694V13.0925H17.4769V12Z"/>
+          <path d="M17.4769 3.23846H18.5694V4.33096H17.4769V3.23846Z"/>
+          <path d="M16.3772 13.0925H17.4769V14.1922H16.3772V13.0925Z"/>
+          <path d="M16.3772 4.33096H17.4769V5.43065H16.3772V4.33096Z"/>
+          <path d="M15.2847 14.1922H16.3772V15.2847H15.2847V14.1922Z"/>
+          <path d="M15.2847 5.43063H16.3772V6.52313H15.2847V5.43063Z"/>
+          <path d="M14.1922 15.2847H15.2847V16.3772H14.1922V15.2847Z"/>
+          <path d="M14.1922 6.52313H15.2847V7.61563H14.1922V6.52313Z"/>
+          <path d="M13.0925 21.8541H14.1922V22.9538H13.0925V21.8541Z"/>
+          <path d="M13.0925 16.3772H14.1922V17.4769H13.0925V16.3772Z"/>
+          <path d="M13.0925 7.61563V8.71532H12V9.80782H18.5694V8.71532H14.1922V7.61563H13.0925Z"/>
+          <path d="M12 17.4769H13.0925V18.5694H12V17.4769Z"/>
+          <path d="M18.5694 2.13876V3.23845H19.6691V1.04626H10.9075V2.13876H18.5694Z"/>
+          <path d="M10.9075 18.5694H12V19.6619H10.9075V18.5694Z"/>
+          <path d="M9.80782 19.6619H10.9075V20.7616H9.80782V19.6619Z"/>
+          <path d="M9.80782 2.13876H10.9075V3.23845H9.80782V2.13876Z"/>
+          <path d="M8.71532 20.7616H9.80782V21.8541H8.71532V20.7616Z"/>
+          <path d="M9.80781 12H3.23843V13.0925H8.71531V15.2847H9.80781V12Z"/>
+          <path d="M8.71532 3.23846H9.80782V4.33096H8.71532V3.23846Z"/>
+          <path d="M7.61563 21.8541H8.71532V22.9538H7.61563V21.8541Z"/>
+          <path d="M7.61563 15.2847H8.71532V18.5694H7.61563V15.2847Z"/>
+          <path d="M7.61563 4.33096H8.71532V5.43065H7.61563V4.33096Z"/>
+          <path d="M6.52313 18.5694H7.61563V21.8541H6.52313V18.5694Z"/>
+          <path d="M6.52313 5.43063H7.61563V6.52313H6.52313V5.43063Z"/>
+          <path d="M5.43062 6.52313H6.52312V7.61563H5.43062V6.52313Z"/>
+          <path d="M4.33093 7.61563H5.43062V8.71532H4.33093V7.61563Z"/>
+          <path d="M3.23843 16.3772H4.33093V17.4769H3.23843V16.3772Z"/>
+          <path d="M3.23843 8.71533H4.33093V9.80783H3.23843V8.71533Z"/>
+          <path d="M3.23844 1.04626V2.13876H2.14594V3.23845H3.23844V4.33095H4.33094V3.23845H5.43062V2.13876H4.33094V1.04626H3.23844Z"/>
+          <path d="M2.14594 17.4769H3.23844V18.5694H2.14594V17.4769Z"/>
+          <path d="M2.14594 15.2847H3.23844V16.3772H2.14594V15.2847Z"/>
+          <path d="M2.14594 9.80783H3.23844V12H2.14594V9.80783Z"/>
+          <path d="M1.04625 16.3772H2.14594V17.4769H1.04625V16.3772Z"/>
+        </symbol>
+
+        <symbol id="icon-user-interface-design" viewBox="0 0 24 24">
+          <title>User Interface Design</title>
+          <path d="M22.4075 16.3844H21.315V17.4769H19.1228V19.6691H16.9306V21.8613H15.8381V22.9538H23.5V21.8613H22.4075V16.3844Z"/>
+          <path d="M21.315 4.33813H22.4075V6.52313H21.315V4.33813Z"/>
+          <path d="M20.2153 15.2847H21.315V16.3844H20.2153V15.2847Z"/>
+          <path d="M20.2153 6.52313H21.315V7.62282H20.2153V6.52313Z"/>
+          <path d="M20.2153 3.23846H21.315V4.33815H20.2153V3.23846Z"/>
+          <path d="M19.1228 7.62283H20.2153V8.71533H19.1228V7.62283Z"/>
+          <path d="M19.1228 2.14597H20.2153V3.23847H19.1228V2.14597Z"/>
+          <path d="M18.0303 8.71533H19.1228V9.81502H18.0303V8.71533Z"/>
+          <path d="M18.0303 6.52313H19.1228V7.62282H18.0303V6.52313Z"/>
+          <path d="M16.9306 1.04626H19.1228V2.14595H16.9306V1.04626Z"/>
+          <path d="M16.9306 14.1922H20.2153V15.2847H16.9306V14.1922Z"/>
+          <path d="M16.9306 9.815H18.0303V10.9075H16.9306V9.815Z"/>
+          <path d="M16.9306 5.43063H18.0303V6.52313H16.9306V5.43063Z"/>
+          <path d="M15.8381 15.2847H16.9306V16.3844H15.8381V15.2847Z"/>
+          <path d="M15.8381 13.0997H16.9306V14.1922H15.8381V13.0997Z"/>
+          <path d="M15.8381 10.9075H16.9306V12H15.8381V10.9075Z"/>
+          <path d="M15.8381 6.52313H16.9306V7.62282H15.8381V6.52313Z"/>
+          <path d="M15.8381 4.33813H16.9306V5.43063H15.8381V4.33813Z"/>
+          <path d="M15.8381 2.14597H16.9306V3.23847H15.8381V2.14597Z"/>
+          <path d="M14.7384 20.7616H15.8381V21.8613H14.7384V20.7616Z"/>
+          <path d="M14.7384 16.3844H15.8381V17.4769H14.7384V16.3844Z"/>
+          <path d="M14.7384 12H15.8381V13.0997H14.7384V12Z"/>
+          <path d="M14.7384 7.62283H15.8381V8.71533H14.7384V7.62283Z"/>
+          <path d="M14.7384 3.23846H15.8381V4.33815H14.7384V3.23846Z"/>
+          <path d="M13.6459 17.4769H14.7384V20.7616H13.6459V17.4769Z"/>
+          <path d="M13.6459 13.0997H14.7384V14.1922H13.6459V13.0997Z"/>
+          <path d="M13.6459 8.71533H14.7384V9.81502H13.6459V8.71533Z"/>
+          <path d="M13.6459 4.33813H14.7384V5.43063H13.6459V4.33813Z"/>
+          <path d="M12.5534 16.3844H13.6459V17.4769H12.5534V16.3844Z"/>
+          <path d="M12.5534 14.1922H13.6459V15.2847H12.5534V14.1922Z"/>
+          <path d="M12.5534 9.815H13.6459V10.9075H12.5534V9.815Z"/>
+          <path d="M12.5534 5.43063H13.6459V6.52313H12.5534V5.43063Z"/>
+          <path d="M11.4538 15.2847H12.5534V16.3844H11.4538V15.2847Z"/>
+          <path d="M11.4538 10.9075H12.5534V12H11.4538V10.9075Z"/>
+          <path d="M11.4538 6.52313H12.5534V7.62282H11.4538V6.52313Z"/>
+          <path d="M10.3613 16.3844H11.4538V17.4769H10.3613V16.3844Z"/>
+          <path d="M10.3613 12H11.4538V13.0997H10.3613V12Z"/>
+          <path d="M10.3613 7.62283H11.4538V8.71533H10.3613V7.62283Z"/>
+          <path d="M9.26875 17.4769H10.3613V18.5766H9.26875V17.4769Z"/>
+          <path d="M9.26875 13.0997H10.3613V14.1922H9.26875V13.0997Z"/>
+          <path d="M9.26875 8.71533H10.3613V9.81502H9.26875V8.71533Z"/>
+          <path d="M9.26875 6.52313H10.3613V7.62282H9.26875V6.52313Z"/>
+          <path d="M8.16906 18.5766H9.26875V19.6691H8.16906V18.5766Z"/>
+          <path d="M8.16906 14.1922H9.26875V15.2847H8.16906V14.1922Z"/>
+          <path d="M8.16906 9.815H9.26875V10.9075H8.16906V9.815Z"/>
+          <path d="M8.16906 5.43063H9.26875V6.52313H8.16906V5.43063Z"/>
+          <path d="M7.07656 19.6691H8.16906V20.7616H7.07656V19.6691Z"/>
+          <path d="M7.07656 15.2847H8.16906V16.3844H7.07656V15.2847Z"/>
+          <path d="M7.07656 10.9075H8.16906V12H7.07656V10.9075Z"/>
+          <path d="M7.07656 4.33813H8.16906V5.43063H7.07656V4.33813Z"/>
+          <path d="M5.97688 20.7616H7.07656V21.8613H5.97688V20.7616Z"/>
+          <path d="M5.97688 16.3844H7.07656V17.4769H5.97688V16.3844Z"/>
+          <path d="M5.97688 12H7.07656V13.0997H5.97688V12Z"/>
+          <path d="M5.97688 9.815H7.07656V10.9075H5.97688V9.815Z"/>
+          <path d="M5.97688 3.23846H7.07656V4.33815H5.97688V3.23846Z"/>
+          <path d="M4.88438 19.6691H5.97688V20.7616H4.88438V19.6691Z"/>
+          <path d="M4.88438 17.4769H5.97688V18.5766H4.88438V17.4769Z"/>
+          <path d="M4.88438 13.0997H5.97688V14.1922H4.88438V13.0997Z"/>
+          <path d="M4.88438 8.71533H5.97688V9.81502H4.88438V8.71533Z"/>
+          <path d="M4.88438 2.14597H5.97688V3.23847H4.88438V2.14597Z"/>
+          <path d="M3.79187 20.7616H2.69219V19.6691H1.59969V17.4769H0.5V22.9538H5.97687V21.8613H3.79187V20.7616Z"/>
+          <path d="M3.79188 18.5766H4.88438V19.6691H3.79188V18.5766Z"/>
+          <path d="M3.79188 14.1922H4.88438V15.2847H3.79188V14.1922Z"/>
+          <path d="M3.79188 7.62283H4.88438V8.71533H3.79188V7.62283Z"/>
+          <path d="M2.69218 1.04626H4.88437V2.14595H2.69218V1.04626Z"/>
+          <path d="M2.69218 17.4769H3.79187V18.5766H2.69218V17.4769Z"/>
+          <path d="M2.69218 15.2847H3.79187V16.3844H2.69218V15.2847Z"/>
+          <path d="M2.69218 6.52313H3.79187V7.62282H2.69218V6.52313Z"/>
+          <path d="M1.59969 16.3844H2.69219V17.4769H1.59969V16.3844Z"/>
+          <path d="M1.59969 5.43063H2.69219V6.52313H1.59969V5.43063Z"/>
+          <path d="M1.59969 2.14597H2.69219V3.23847H1.59969V2.14597Z"/>
+          <path d="M0.5 3.23846H1.59969V5.43065H0.5V3.23846Z"/>
+        </symbol>
+
+        <symbol id="icon-front-end-development" viewBox="0 0 24 24">
+          <title>Front-End Development</title>
+          <path d="M22.4075 18.573H23.5V19.6655H22.4075V18.573Z"/>
+          <path d="M23.5 10.9039V8.7117H22.4075V9.81139H21.3078V7.6192H20.2153V12.0036H19.1156V10.9039H18.0231V13.0961H20.2153V16.3808H14.7384V17.4805H23.5V16.3808H21.3078V10.9039H23.5Z"/>
+          <path d="M21.3078 1.04984H23.5V2.14234H21.3078V1.04984Z"/>
+          <path d="M19.1156 18.573H20.2153V19.6655H19.1156V18.573Z"/>
+          <path d="M18.0231 3.24203H20.2153V4.33453H18.0231V3.24203Z"/>
+          <path d="M14.7384 18.573H15.8309V19.6655H14.7384V18.573Z"/>
+          <path d="M14.7384 7.61922H11.4538V8.71172H14.7384V9.81141H15.8309V4.33453H14.7384V7.61922Z"/>
+          <path d="M10.3541 12.0036H8.16907V13.0961H10.3541V14.1886H8.16907V13.0961H7.06938V17.4805H10.3541V18.573H7.06938V19.6655H3.78469V20.7688H4.88438V22.9538H7.06938V21.8613H5.97688V20.7688H9.26157V19.6691H10.3541V20.7688H12.5463V19.6691H11.4538V15.2919H12.5463V16.3844H13.6459V14.1922H11.4538V10.9075H14.7384V9.815H10.3541V12.0036ZM10.3541 16.3808H8.16907V15.2883H10.3541V16.3808Z"/>
+          <path d="M8.16906 1.04984H10.3541V2.14234H8.16906V1.04984Z"/>
+          <path d="M7.06937 5.42703H8.16906V7.61922H7.06937V5.42703Z"/>
+          <path d="M5.97688 3.24203H14.7384V4.33453H5.97688V3.24203Z"/>
+          <path d="M5.97688 17.4805H7.06938V18.573H5.97688V17.4805Z"/>
+          <path d="M4.88438 4.33453H5.97688V12.0036H4.88438V4.33453Z"/>
+          <path d="M3.78469 12.0036H4.88438V15.2883H3.78469V12.0036Z"/>
+          <path d="M2.69218 18.573H3.78468V19.6655H2.69218V18.573Z"/>
+          <path d="M2.69218 15.2883H3.78468V16.3808H2.69218V15.2883Z"/>
+          <path d="M1.5925 17.4805H2.69219V18.573H1.5925V17.4805Z"/>
+          <path d="M0.5 4.33453H2.69219V5.42703H0.5V4.33453Z"/>
+          <path d="M1.5925 15.2883H2.69219V14.1886H1.5925V13.0961H0.5V17.4805H1.5925V15.2883Z"/>
+        </symbol>
+
+        <symbol id="icon-wordpress-integration" viewBox="0 0 24 24">
+          <title>Wordpress Integration</title>
+          <g clip-path="url(#clip0_3_28)">
+          <path d="M22.4039 20.2146H23.4964V21.3071H22.4039V20.2146Z"/>
+          <path d="M22.4039 1.59177H23.4964V16.9299H22.4039V1.59177Z"/>
+          <path d="M21.3114 21.3071H22.4039V22.4068H21.3114V21.3071Z"/>
+          <path d="M21.3114 19.1221H22.4039V20.2146H21.3114V19.1221Z"/>
+          <path d="M1.5961 0.499268H22.4039V1.59177H1.5961V0.499268Z"/>
+          <path d="M20.2117 22.4068H21.3114V23.4993H20.2117V22.4068Z"/>
+          <path d="M20.2117 18.0224H21.3114V19.1221H20.2117V18.0224Z"/>
+          <path d="M20.2117 14.7377H21.3114V15.8302H20.2117V14.7377Z"/>
+          <path d="M16.927 11.453H21.3114V12.5455H16.927V11.453Z"/>
+          <path d="M19.1192 21.3071H20.2117V22.4068H19.1192V21.3071Z"/>
+          <path d="M19.1192 16.9299H20.2117V18.0224H19.1192V16.9299Z"/>
+          <path d="M18.0267 20.2146H19.1192V21.3071H18.0267V20.2146Z"/>
+          <path d="M18.0267 15.8302H19.1192V16.9299H18.0267V15.8302Z"/>
+          <path d="M16.927 19.1221H18.0267V20.2146H16.927V19.1221Z"/>
+          <path d="M16.927 14.7377H18.0267V15.8302H16.927V14.7377Z"/>
+          <path d="M15.8345 18.0224H16.927V19.1221H15.8345V18.0224Z"/>
+          <path d="M15.8345 13.6452H16.927V14.7377H15.8345V13.6452Z"/>
+          <path d="M14.7348 16.9299H15.8345V18.0224H14.7348V16.9299Z"/>
+          <path d="M14.7348 12.5455H15.8345V13.6452H14.7348V12.5455Z"/>
+          <path d="M13.6423 15.8302H14.7348V16.9299H13.6423V15.8302Z"/>
+          <path d="M12.5498 14.7377H13.6423V15.8302H12.5498V14.7377Z"/>
+          <path d="M11.4501 3.78397H21.3114V4.88365H11.4501V3.78397Z"/>
+          <path d="M14.7348 12.5455V11.453H11.4501V14.7377H12.5498V12.5455H14.7348Z"/>
+          <path d="M11.4501 7.06863H21.3114V8.16832H11.4501V7.06863Z"/>
+          <path d="M10.3577 2.69147H2.6886V10.3605H10.3577V2.69147ZM9.26875 5.97615H8.16907V4.88437H7.07297V8.16906H8.16547V9.26156H4.88438V8.16906H5.97688V4.88437H4.88438V5.97687H3.78829V3.78397H9.26875V5.97615Z"/>
+          <path d="M2.6886 11.453H9.26516V12.5455H2.6886V11.453Z"/>
+          <path d="M9.26515 21.3071V18.0224H12.5498V16.9299H8.16547V20.2146H7.07297V21.3071H9.26515Z"/>
+          <path d="M2.6886 14.7377H9.26516V15.8302H2.6886V14.7377Z"/>
+          <path d="M5.97327 19.1221H7.07295V20.2146H5.97327V19.1221Z"/>
+          <path d="M4.88077 18.0224H5.97327V19.1221H4.88077V18.0224Z"/>
+          <path d="M1.5961 16.9299H4.88079V18.0224H1.5961V16.9299Z"/>
+          <path d="M0.496399 1.59177H1.59609V16.9299H0.496399V1.59177Z"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_3_28">
+          <rect width="24" height="24" fill="white"/>
+          </clipPath>
+          </defs>
+        </symbol>
+
+        <symbol id="icon-lock" viewBox="0 0 24 24">
+          <title>Lock</title>
+          <path d="M19.1192 10.3541H20.2117V21.3078H19.1192V10.3541Z"/>
+          <path d="M18.0195 21.3078H19.1192V22.4075H18.0195V21.3078Z"/>
+          <path d="M5.97327 22.4075H18.0195V23.5H5.97327V22.4075Z"/>
+          <path d="M15.8345 1.5925H16.927V2.69219H15.8345V1.5925Z"/>
+          <path d="M13.6423 14.7385H12.5498V13.646H13.6423V12.5463H10.3577V13.646H9.25797V15.831H10.3577V16.9306H11.4502V20.2153H12.5498V16.9306H13.6423V15.831H14.7348V13.646H13.6423V14.7385Z"/>
+          <path d="M8.16547 0.5H15.8345V1.5925H8.16547V0.5Z"/>
+          <path d="M7.07297 1.5925H8.16547V2.69219H7.07297V1.5925Z"/>
+          <path d="M19.1192 10.3541V9.26157H18.0195V2.6922H16.927V9.26157H7.07296V2.6922H5.97327V9.26157H4.88077V10.3541H19.1192Z"/>
+          <path d="M4.88077 21.3078H5.97327V22.4075H4.88077V21.3078Z"/>
+          <path d="M3.78827 10.3541H4.88077V21.3078H3.78827V10.3541Z"/>
+        </symbol>
+
+        <symbol id="icon-secret" viewBox="0 0 24 24">
+          <title>Secret</title>
+          <path d="M21.3114 5.43066H22.4039V15.2847H21.3114V5.43066Z"/>
+          <path d="M20.2189 15.2847H21.3114V16.3772H20.2189V15.2847Z"/>
+          <path d="M20.2189 4.33093H21.3114V5.43062H20.2189V4.33093Z"/>
+          <path d="M19.1192 16.3772H20.2189V17.4769H19.1192V16.3772Z"/>
+          <path d="M19.1192 3.23846H20.2189V4.33096H19.1192V3.23846Z"/>
+          <path d="M18.0267 17.4769H19.1192V21.8541H18.0267V17.4769Z"/>
+          <path d="M18.0267 9.8078H15.8345V10.9003H14.742V13.0925H15.8345V14.1922H18.0267V13.0925H19.1192V10.9003H18.0267V9.8078Z"/>
+          <path d="M16.927 2.13879H19.1192V3.23848H16.927V2.13879Z"/>
+          <path d="M14.742 21.8541H18.0267V22.9538H14.742V21.8541Z"/>
+          <path d="M13.6423 18.5694H14.742V21.8541H13.6423V18.5694Z"/>
+          <path d="M10.3577 21.8541H13.6424V22.9538H10.3577V21.8541Z"/>
+          <path d="M10.3577 15.2847H13.6424V16.3772H10.3577V15.2847Z"/>
+          <path d="M9.26517 18.5694H10.3577V21.8541H9.26517V18.5694Z"/>
+          <path d="M7.07297 1.04626H16.927V2.13876H7.07297V1.04626Z"/>
+          <path d="M5.98047 21.8541H9.26516V22.9538H5.98047V21.8541Z"/>
+          <path d="M8.16547 9.8078H5.98047V10.9003H4.88078V13.0925H5.98047V14.1922H8.16547V13.0925H9.26516V10.9003H8.16547V9.8078Z"/>
+          <path d="M4.88078 2.13879H7.07297V3.23848H4.88078V2.13879Z"/>
+          <path d="M4.88078 17.4769H5.98047V21.8541H4.88078V17.4769Z"/>
+          <path d="M3.78828 16.3772H4.88078V17.4769H3.78828V16.3772Z"/>
+          <path d="M3.78828 3.23846H4.88078V4.33096H3.78828V3.23846Z"/>
+          <path d="M2.69579 15.2847H3.78829V16.3772H2.69579V15.2847Z"/>
+          <path d="M2.69579 4.33093H3.78829V5.43062H2.69579V4.33093Z"/>
+          <path d="M1.5961 5.43066H2.69579V15.2847H1.5961V5.43066Z"/>
+        </symbol>
+
+        <symbol id="icon-cursor" viewBox="0 0 24 24">
+          <title>Cursor</title>
+          <path d="M13.0925 14.7348V16.927H14.1922V15.8345H18.5694V13.6423H17.4769V14.7348H13.0925Z"/>
+          <path d="M16.3772 12.5426H17.4769V13.6423H16.3772V12.5426Z"/>
+          <path d="M15.2847 19.1192H16.3772V21.3042H15.2847V19.1192Z"/>
+          <path d="M15.2847 11.4501H16.3772V12.5426H15.2847V11.4501Z"/>
+          <path d="M14.1922 16.927H15.2847V19.1192H14.1922V16.927Z"/>
+          <path d="M14.1922 10.3576H15.2847V11.4501H14.1922V10.3576Z"/>
+          <path d="M13.0925 21.3042H15.2847V22.4039H13.0925V21.3042Z"/>
+          <path d="M13.0925 9.25793H14.1922V10.3576H13.0925V9.25793Z"/>
+          <path d="M12 19.1192H13.0925V21.3042H12V19.1192Z"/>
+          <path d="M12 8.16544H13.0925V9.25794H12V8.16544Z"/>
+          <path d="M10.9003 16.927H12V19.1192H10.9003V16.927Z"/>
+          <path d="M10.9003 7.06573H12V8.16542H10.9003V7.06573Z"/>
+          <path d="M9.80783 15.8345H10.9003V16.927H9.80783V15.8345Z"/>
+          <path d="M9.80783 5.97327H10.9003V7.06577H9.80783V5.97327Z"/>
+          <path d="M8.71533 16.927H9.80783V18.0195H8.71533V16.927Z"/>
+          <path d="M8.71533 4.88074H9.80783V5.97324H8.71533V4.88074Z"/>
+          <path d="M7.61563 18.0195H8.71532V19.1192H7.61563V18.0195Z"/>
+          <path d="M7.61563 3.78107H8.71532V4.88075H7.61563V3.78107Z"/>
+          <path d="M5.43063 1.59607V20.2117H7.61563V19.1192H6.52313V3.78107H7.61563V2.68857H6.52313V1.59607H5.43063Z"/>
+        </symbol>
+      </defs>
+    </svg>
+
+    <span x-ref="fader" class="fixed z-[99999] top-0 left-0 w-full h-full bg-[--color-bg] pointer-events-none"></span>
+
+    <header class="col-start-1 col-span-1 row-start-2 row-span-1 justify-self-center">
+        <a href="index.html" @click="handleClick">[ X ]</a>
+    </header>
+
+    <main class="relative col-start-2 col-span-3 row-start-2 row-span-8 grid grid-cols-subgrid grid-rows-subgrid h-full shadow-[0_0_0_0.5px_rgba(0,0,0,0.5)]" role="region" aria-label="Projects">
+        <h1 class="sr-only" x-text="'Work'"></h1>
+    
+        <template x-for="(project, index) in projects" :key="index">
+            <section class="col-span-1 row-span-4">
+                    
+                <h2 class="relative flex flex-col items-center justify-center w-full h-full focus:outline-none shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.5)]">
+                    <button type="button" class="w-full h-full p-8 space-y-8 disabled:cursor-not-allowed group"
+                        :disabled="index === projects.length - 1"
+                        :aria-expanded="project.isOpen"
+                        :aria-controls="'project-' + index"
+                        @click="toggleProject($el, index)">
+
+                        <span class="block absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-disabled:hidden" style="border-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGQ0MwMCIvPgo8cmVjdCB5PSIyIiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTAgMCAyKSIgZmlsbD0iI0ZGQ0MwMCIvPgo8cmVjdCB5PSIxOCIgd2lkdGg9IjIiIGhlaWdodD0iNiIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDAgMTgpIiBmaWxsPSIjRkZDQzAwIi8+CjxyZWN0IHg9IjEyIiB5PSIyIiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTAgMTIgMikiIGZpbGw9IiNGRkNDMDAiLz4KPHJlY3QgeD0iMTIiIHk9IjE4IiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTAgMTIgMTgpIiBmaWxsPSIjRkZDQzAwIi8+CjxyZWN0IHg9IjE2IiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZDQzAwIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZDQzAwIi8+CjxyZWN0IHg9IjE2IiB5PSIxMiIgd2lkdGg9IjIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGQ0MwMCIvPgo8L3N2Zz4K') 8 / 8px round;"></span>
+
+                        <p class="relative z-10 text-center font-caps lowercase" x-text="project.name"></p>
+
+                        <ul class="relative z-10 flex justify-center space-x-5">
+                          <template x-for="(icon, index) in project.icons" :key="index">
+                            <li class="flex items-center justify-center w-12 h-12 border border-[--color-danger] rotate-45">
+                              <svg class="w-8 h-8 text-[--color-fill] fill-current -rotate-45"><use :xlink:href="'#icon-' + icon.name"></use></svg>
+                            </li>
+                          </template>
+                        </ul>
+
+                        <span class="absolute left-1/2 bottom-8 -translate-x-1/2 flex gap-x-1 items-center justify-center opacity-50">
+                            <span x-text="'0%'"></span>
+                        </span>
+                    </button>
+                </h2>
+
+                <article class="absolute z-20 top-0 left-0 w-full h-full scale-x-[0.33333] bg-[--color-bg] scale-y-50 border border-black/50 origin-top-left flex flex-col invisible"
+                        :id="'project-' + index"
+                        :style="getProjectStyle(index)">
+
+                    <header class="relative w-full h-20 px-8 border-b-[1.5px] border-black/50 flex items-center justify-between invisible">
+                        <h3 class="font-caps lowercase" x-text="project.name"></h3>
+
+                        <div class="flex gap-4">
+                            <button type="button" class="shrink-0 flex items-center justify-center w-4 h-4 text-xs text-[--color-bg] bg-[--color-danger] drop-shadow-[0_0.25rem_0_rgba(0,0,0,1)] scale-0 js-project-action"
+                                    @click="toggleProject($el, index)">
+                                    <span class="sr-only" x-text="'Close Project'"></span>
+                            </button>
+
+                            <button type="button" class="shrink-0 flex items-center justify-center w-4 h-4 text-xs text-[--color-bg] bg-[--color-text] drop-shadow-[0_0.25rem_0_rgba(0,0,0,1)] scale-0 js-project-action">
+                                <span class="sr-only" x-text="'More Info'"></span>
+                            </button>
+
+                            <a :href="project.url" target="_blank" class="shrink-0 flex items-center justify-center h-4 px-1 text-xs text-[--color-bg] font-caps lowercase bg-[--color-fill] drop-shadow-[0_0.25rem_0_rgba(0,0,0,1)] scale-0 js-project-action" x-text="'Visit'"></a>
+                        </div>
+                    </header>
+
+                    <div class="w-full h-full overflow-auto invisible">
+                        <div class="w-full h-screen bg-[--color-text]"></div>
+                    </div>
+                </article>
+            </section>
+        </template>
+    </main>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('projectManager', () => ({
+                projects: [
+                    { id: '1', url: 'https://superiorcatfish.com/', name: 'Superior Catfish', icons: [{ name: 'branding-and-identity'},{ name: 'web-based-animation'},{ name: 'user-interface-design'}], isOpen: false, timeline: null },
+                    { id: '2', url: 'https://beisbolensaltlake.com/', name: 'Beisbol en Salt Lake', icons: [{ name: 'branding-and-identity'},{ name: 'web-based-animation'},{ name: 'user-interface-design'}], isOpen: false, timeline: null },
+                    { id: '3', url: 'https://madg.com/', name: 'Mad Genius', icons: [{ name: 'branding-and-identity'},{ name: 'web-based-animation'},{ name: 'user-interface-design'}], isOpen: false, timeline: null },
+                    { id: '4', url: 'https://www.wgyates.com/', name: 'Yates Construction', icons: [{ name: 'branding-and-identity'},{ name: 'web-based-animation'},{ name: 'user-interface-design'}], isOpen: false, timeline: null },
+                    { id: '5', url: 'https://dulinghall.com/', name: 'Duling Hall', icons: [{ name: 'branding-and-identity'},{ name: 'web-based-animation'},{ name: 'user-interface-design'}], isOpen: false, timeline: null },
+                    { id: '6', url: '#', name: 'Secret Project', icons: [{ name: 'secret'},], isOpen: false, timeline: null },
+                ],
+                getProjectStyle(index) {
+                    const origins = ['left top', 'center top', 'right top', 'left bottom', 'center bottom', 'right bottom'];
+                    return `transform-origin: ${origins[index]};`;
+                },
+                toggleProject(el, index) {
+                    if (index === this.projects.length - 1) return;
+                    
+                    const project = this.projects[index],
+                          projectArticle = el.closest('article') || el.parentElement.nextElementSibling,
+                          projectContent = projectArticle.children,
+                          projectActions = gsap.utils.toArray('.js-project-action', projectArticle);
+
+                    if (!project.timeline) {
+                        project.timeline = gsap.timeline({
+                          paused: true,
+                          onComplete: () => {
+                            project.isOpen = true;
+                            projectActions[0].focus();
+                          },
+                          onReverseComplete: () => {
+                            project.isOpen = false;
+                            projectArticle.previousElementSibling.focus();
+                          }
+                        })
+
+                        .to(projectArticle, { autoAlpha: 1, duration: 0.2, ease: 'none' })
+                        .to(projectArticle, { scaleY: 1, duration: 0.4, ease: 'power4.out', })
+                        .to(projectArticle, { scaleX: 1, duration: 0.4, ease: 'power4.out', })
+                        .to(projectContent, { autoAlpha: 1, duration: 0.2, ease: 'none' })
+                        .to(projectActions, { scale: 1, duration: 0.2, stagger: -0.1, ease: 'power4.out', });
+                    }
+
+                    project.isOpen ? project.timeline.reverse() : project.timeline.play();
+                }
+            }))
+        })
+    </script>
+
+    <script src="js/global.js"></script>
+</body>
+</html>

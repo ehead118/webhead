@@ -1,0 +1,71 @@
+<!doctype html>
+
+<html class="font-body text-sm" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Webhead</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || ''</script>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    fontFamily: {
+                        body: ['unibody_8_pro_regregular', 'sans-serif'],
+                        head: ['unibody_8_pro_regregular', 'sans-serif'],
+                        caps: ['unibody_8_proRgsmallcaps', 'sans-serif'],
+                    },
+                    extend: {
+                        colors: {
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            transparent: 'transparent',
+                            current: 'currentColor',
+                            inherit: 'inherit',
+                        },
+                    }
+                },
+            }
+        </script>
+    </head>
+
+    <body class="grid grid-cols-5 grid-rows-10 bg-[--color-bg] text-[--color-text] antaliased h-screen transition-colors duration-300" x-data="fader">
+
+        <span x-ref="fader" class="fixed z-[99999] top-0 left-0 w-full h-full bg-[--color-bg] pointer-events-none"></span>
+
+        <main class="col-start-2 col-span-3 row-start-2 row-span-8">
+
+            <h1 class="sr-only">Home</h1>
+
+            <ul class="space-y-4"
+
+                x-data="{ pages: [
+                    { name: 'Work', url: 'work.html' },
+                    { name: 'About', url: 'about.html' },
+                    { name: 'Blog', url: 'blog.html' },
+                    { name: 'Options', url: 'options.html' },
+                ]}">
+
+                <template x-for="(page, index) in pages" :key="index">
+                    <li>
+                        <a :href="page.url" x-text="page.name" @click="handleClick"></a>
+                    </li>
+                </template>
+            </ul>
+        </main>
+
+        <div id="hero" class="row-start-2 row-span-8 col-start-3 col-span-2 bg-[--color-fill]">
+          <p>WebHead Asperite Pixel Art - Top of Head with UI/Dev Tools Coming Out - Manipulate Like Mario 64 Start Screen</p>
+        </div>
+
+        <script src="js/global.js"></script>
+    </body>
+</html>

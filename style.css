@@ -1,0 +1,127 @@
+:root, [data-theme='code'] {
+  --color-bg: #10141f;
+  --color-text: #ffffff;
+  --color-fill: #75a743;
+  --color-danger: #cf573c;
+  --color-highlight: #ffcc00;
+}
+
+[data-theme='melon'] {
+  --color-bg: #012824;
+  --color-text: #ebede9;
+  --color-fill: #265935;
+  --color-danger: #ff4d6d;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='vapor'] {
+  --color-bg: #482254;
+  --color-text: #feffbe;
+  --color-fill: #ff8370;
+  --color-danger: #83ded2;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='game'] {
+  --color-bg: #708028;
+  --color-text: #405010;
+  --color-fill: #a0a840;
+  --color-danger: #d0d058;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='paint'] {
+  --color-bg: #b8c2b9;
+  --color-text: #382b26;
+  --color-fill: #382b26;
+  --color-danger: #382b26;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='moon'] {
+  --color-bg: #0f052d;
+  --color-text: #36868f;
+  --color-fill: #203671;
+  --color-danger: #5fc75d;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='acid'] {
+  --color-bg: #b2d942;
+  --color-text: #ffffff;
+  --color-fill: #52c33f;
+  --color-danger: #fcf660;
+/*  --color-highlight: #ffffff;*/
+}
+
+[data-theme='1-bit'] {
+  --color-bg: #0f0f0f;
+  --color-text: #989898;
+  --color-fill: #989898;
+  --color-danger: #313131;
+/*  --color-highlight: #ffffff;*/
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'unibody_8_problack';
+    src: url('fonts/unibody8pro-black-webfont.woff2') format('woff2'),
+         url('fonts/unibody8pro-black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'unibody_8_probold';
+    src: url('fonts/unibody8pro-bold-webfont.woff2') format('woff2'),
+         url('fonts/unibody8pro-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'unibody_8_pro_regregular';
+    src: url('fonts/unibody8pro-regular-webfont.woff2') format('woff2'),
+         url('fonts/unibody8pro-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'unibody_8_proregular_italic';
+    src: url('fonts/unibody8pro-regularitalic-webfont.woff2') format('woff2'),
+         url('fonts/unibody8pro-regularitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'unibody_8_proRgsmallcaps';
+    src: url('fonts/unibody8pro-regularsmallcaps-webfont.woff2') format('woff2'),
+         url('fonts/unibody8pro-regularsmallcaps-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis [data-lenis-prevent] {
+    overflow: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

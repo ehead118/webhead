@@ -1,0 +1,1 @@
+<span class="block absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 group-focus:opacity-100" style="border-image: url('<?php echo get_template_directory_uri(); ?>/images/border.svg') 8 / 8px round;"></span>
